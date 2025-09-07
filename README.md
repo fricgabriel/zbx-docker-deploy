@@ -9,8 +9,9 @@ A configuração garante persistência de dados no disco do host e permite que o
 
 Antes de começar, instale o **Docker** e o **Docker Compose** no Ubuntu.
 
-### 1. Atualizar sistema
-sudo apt update && sudo apt upgrade -y
+### Atualizar sistema
+```bash
+1. sudo apt update && sudo apt upgrade -y
 
 2. Instalar Docker
 sudo apt install docker.io -y
