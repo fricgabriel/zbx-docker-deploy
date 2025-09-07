@@ -1,0 +1,63 @@
+version: '3.9'
+
+services:
+  # Serviço do Banco de Dados PostgreSQL
+  postgres-server:
+    image: postgres:15-alpine
+    container_name: postgres-zabbix
+    restart: unless-stopped
+    # Variáveis de ambiente para configurar o banco de dados.
+    environment:
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=Wh1t3c@r3
+      - POSTGRES_DB=zabbix
+    volumes:
+      # O tamanho será limitado apenas pelo disco do seu servidor.
+      - ./zabbix_data/postgres_data:/var/lib/postgresql/data
+    networks:
+      - zabbix-net
+
+  # Serviço do Zabbix Server
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:latest
+    container_name: zabbix-server
+    restart: unless-stopped
+    ports:
+      - "10051:10051" # Porta para os agentes Zabbix se conectarem
+    # Variáveis de ambiente para conectar o Zabbix Server ao banco de dados.
+    environment:
+      - DB_SERVER_HOST=postgres-server
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=Wh1t3c@r3
+      - POSTGRES_DB=zabbix
+    volumes:
+       - ./zabbix_data/alertscripts:/usr/lib/zabbix/alertscripts
+    networks:
+      - zabbix-net
+    depends_on:
+      - postgres-server # Garante que o banco de dados inicie antes do Zabbix Server
+
+  # Serviço da Interface Web do Zabbix (com Nginx)
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:latest
+    container_name: zabbix-web
+    restart: unless-stopped
+    ports:
+      - "8080:8080" # Acesso à interface web: http://<ip_do_servidor>:8080
+    # Variáveis de ambiente para conectar a interface web.
+    environment:
+      - DB_SERVER_HOST=postgres-server
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=Wh1t3c@r3
+      - POSTGRES_DB=zabbix
+      - ZBX_SERVER_HOST=zabbix-server # Informa à interface onde o Zabbix Server está
+    networks:
+      - zabbix-net
+    depends_on:
+      - zabbix-server # Garante que o Zabbix Server inicie antes da interface web
+
+# Define a rede para a comunicação entre os contêineres
+networks:
+  zabbix-net:
+    driver: bridge
+	
