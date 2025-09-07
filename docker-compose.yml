@@ -9,7 +9,7 @@ services:
     # Variáveis de ambiente para configurar o banco de dados.
     environment:
       - POSTGRES_USER=zabbix
-      - POSTGRES_PASSWORD=Wh1t3c@r3
+      - POSTGRES_PASSWORD="" 
       - POSTGRES_DB=zabbix
     volumes:
       # O tamanho será limitado apenas pelo disco do seu servidor.
@@ -28,7 +28,7 @@ services:
     environment:
       - DB_SERVER_HOST=postgres-server
       - POSTGRES_USER=zabbix
-      - POSTGRES_PASSWORD=Wh1t3c@r3
+      - POSTGRES_PASSWORD=""
       - POSTGRES_DB=zabbix
     volumes:
        - ./zabbix_data/alertscripts:/usr/lib/zabbix/alertscripts
@@ -48,7 +48,7 @@ services:
     environment:
       - DB_SERVER_HOST=postgres-server
       - POSTGRES_USER=zabbix
-      - POSTGRES_PASSWORD=Wh1t3c@r3
+      - POSTGRES_PASSWORD=""
       - POSTGRES_DB=zabbix
       - ZBX_SERVER_HOST=zabbix-server # Informa à interface onde o Zabbix Server está
     networks:
