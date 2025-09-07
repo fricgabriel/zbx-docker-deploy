@@ -10,7 +10,6 @@ A configuração garante persistência de dados no disco do host e permite que o
 Antes de começar, instale o **Docker** e o **Docker Compose** no Ubuntu.
 
 ### 1. Atualizar sistema
-```bash
 sudo apt update && sudo apt upgrade -y
 
 2. Instalar Docker
@@ -56,7 +55,7 @@ Saída esperada:
 -----------------------------------------------------------------------------------
 postgres-zabbix     docker-entrypoint.sh postgres    Up      5432/tcp
 zabbix-server       /usr/sbin/zabbix_server -c ...   Up      0.0.0.0:10051->10051/tcp
-zabbix-web          /usr/sbin/nginx -g 'daemo ...   Up      0.0.0.0:8080->8080/tcp
+zabbix-web          /usr/sbin/nginx                  Up      0.0.0.0:8080->8080/tcp
 
 🌐 Acessando o Zabbix
 
