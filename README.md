@@ -67,4 +67,5 @@ http://<IP>:8080
 Credenciais padrão:
 Usuário: Admin
 Senha: zabbix
-# dtc_zabbix2025
+
+# zbx-docker-deploy
